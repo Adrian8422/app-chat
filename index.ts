@@ -34,6 +34,107 @@ app.post("/signup", (req,res)=>{
     }
   })
 })
+
+
+app.post("/signin", (req, res) => {
+  const { email } = req.body;
+  userCollection
+    .where("email", "==", email)
+    .get()
+    .then((searchResponse) => {
+      if (searchResponse.empty) {
+        res.status(404).json({
+          message: "not found",
+        });
+      } else {
+        res.json({
+          /// colocar id porque la data que pedimos con fetch desde el state signin pide el id de la data y coincide con la
+          ///la data que da este json respuesta
+          ///si no funciona tengo que cambiar el userId por id
+          id: searchResponse.docs[0].id,
+        });
+      }
+    });
+});
+
+app.post("/rooms", (req, res) => {
+  const { userId } = req.body;
+  userCollection
+    .doc(userId)
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        const roomRef = rtdb.ref("rooms/" + nanoid());
+        roomRef
+          .set({
+            owner: userId,
+            messages: ([] = []),
+          })
+          .then(() => {
+            const longIdRoom = roomRef.key;
+            const roomId = 1000 + Math.floor(Math.random() * 999);
+            roomsCollection
+              .doc(roomId.toString())
+              .set({
+                rtdbRoomId: longIdRoom,
+              })
+              .then(() => {
+                res.json({
+                  /// change userId por id
+                  id: roomId.toString(),
+                });
+              });
+          });
+      } else {
+        res.status(400).json({
+          message: "no exist room",
+        });
+      }
+    });
+});
+
+app.get("/rooms/:roomId", (req, res) => {
+  const { userId } = req.query;
+  const { roomId } = req.params;
+
+  ///PROXIMO REVISA SI EL USERID CORRESPONDE ALGUN USUARIO DE USERS EN FIRESTORE
+  userCollection
+    .doc(userId.toString())
+    .get()
+    .then((doc) => {
+      ////SI EXISTE, VA A BUSCAR EL ROOM ID LARGO DENTRO DE FIRESTORE,USANDO EL ID CORTO
+      if (doc.exists) {
+        roomsCollection
+          .doc(roomId)
+          .get()
+
+          .then((snap) => {
+            /// VERIFICA QUE EL ROOM EXISTA
+            if (snap.exists) {
+              ///TERMINA DEVOLVIENDO EL ID LARGO QUE CORRESPONDE AL ROOM
+              const data = snap.data();
+              console.log("la datta de get room", data);
+              res.json(data);
+            }
+          });
+      } else {
+        res.status(400).json({
+          message: "no exist room",
+        });
+      }
+    });
+});
+
+app.post("/messages/:roomId", (req, res) => {
+  const { roomId } = req.params;
+  const chatRoomsRef = rtdb.ref(`/rooms/${roomId}/messages`);
+  chatRoomsRef.push(req.body, function () {
+    res.json({
+      message: "todo nice",
+    });
+  });
+});
+
 app.get("/env",(req,res)=>{
   res.json({
     enviroment:process.env.NODE_ENV,
