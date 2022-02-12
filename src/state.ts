@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://dwf-m6-probando1.herokuapp.com";
+const API_BASE_URL = "";
 import { rtdb } from "./rtdb";
 import map from "lodash/map";
 const state = {

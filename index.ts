@@ -5,11 +5,13 @@ const cors =require("cors")
 // UTILIZAR CORS ES NECESARIO SI O SI CUANDO MANTENEMOS BACK Y FRONT SEPARADOS
 const app = express()
 
-app.use(cors())
 const port = process.env.PORT || 3000
 
 const userCollection = firestore.collection("users")
 const roomsCollection = firestore.collection("rooms")
+app.use(express.json())
+app.use(express.static("dist"))
+app.use(cors())
 // console.log(userCollection)
 
 
@@ -153,7 +155,6 @@ app.get("/hola", (req,res)=>{
   })
 })
 
-app.use(express.static("dist"))
 app.get("*",(req,res)=>{
   res.sendFile(__dirname + "/dist/.index.html")
 
