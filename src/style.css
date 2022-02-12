@@ -1,0 +1,29 @@
+* {
+  box-sizing: border-box;
+
+  padding: 10px;
+}
+body {
+  padding: 10px;
+  background-color: rgb(128, 225, 238);
+}
+.welcome-form {
+  width: 100%;
+}
+.root {
+  /* display: flex; */
+  max-width: 125vh;
+  background-color: rgb(100, 205, 236);
+  box-shadow: rgb(0 0 0 / 15%) 9px 8px 7px;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-root {
+  width: 100%;
+}
+
+.chat-page {
+  width: 100%;
+}
