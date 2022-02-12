@@ -1,3 +1,4 @@
+const API_BASE_URL = "https://dwf-m6-probando1.herokuapp.com";
 import { rtdb } from "./rtdb";
 import map from "lodash/map";
 const state = {
@@ -23,7 +24,7 @@ const state = {
     const cs = this.getState();
     const fullName = cs.fullName;
     const email = cs.email;
-    fetch("/signup", {
+    fetch(API_BASE_URL + "/signup", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -63,7 +64,7 @@ const state = {
   pushMessage(messages: string) {
     const cs = this.getState();
     const nombreState = this.data.fullName;
-    fetch(`/messages/${cs.rtdbRoomId}`, {
+    fetch(API_BASE_URL + `/messages/${cs.rtdbRoomId}`, {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -86,7 +87,7 @@ const state = {
   signIn(callback?) {
     const currentState = this.getState();
     if (currentState.email) {
-      fetch( "/signin", {
+      fetch(API_BASE_URL + "/signin", {
         method: "post",
         headers: {
           "content-type": "application/json",
@@ -115,7 +116,7 @@ const state = {
     const roomId = incompleteRoomId.toString();
 
     if (cs.roomId && cs.userId) {
-      fetch("/rooms/" + roomId + "?userId=" + userId)
+      fetch(API_BASE_URL + "/rooms/" + roomId + "?userId=" + userId)
         .then((res) => {
           return res.json();
         })
@@ -136,7 +137,7 @@ const state = {
   askNewRoom(callback?) {
     const cs = this.getState();
     if (cs.userId) {
-      fetch( "/rooms", {
+      fetch(API_BASE_URL + "/rooms", {
         method: "post",
         headers: {
           "content-type": "application/json",
