@@ -1,6 +1,5 @@
 import { state } from "../../state";
-// const imgClose = require("url:../../../dist/pixlr-bg-result (9).png");
-
+ const imgClose = require("url:../../assets/close-img-menu.png");
 class SignUpEl extends HTMLElement {
   connectedCallback() {
     this.render();
@@ -33,7 +32,7 @@ class SignUpEl extends HTMLElement {
   render() {
     const style = document.createElement("style");
     style.innerHTML = `
-    
+
     .container-form-sign-up{
       display: none;
       background-color: rgb(24 36 39);
@@ -51,8 +50,8 @@ class SignUpEl extends HTMLElement {
       left: 82px;
       box-shadow: rgb(0 0 0 / 63%) 7px 7px 6px;
     }
-      
-    
+
+
     .label-signup{
       font-size: 20px;
       width: 100%;
@@ -60,8 +59,8 @@ class SignUpEl extends HTMLElement {
       border-radius: 4px;
       font-family: 'Russo One', sans-serif;
     }
-     
-    
+
+
     .input{
       width:100%;
       border-radius: 4px;
@@ -82,7 +81,7 @@ class SignUpEl extends HTMLElement {
       flex-direction:column;
     }
     .button{
-      width: 150px; 
+      width: 150px;
       border-radius: 4px;
       font-weight: 500;
     }
@@ -93,16 +92,16 @@ class SignUpEl extends HTMLElement {
 
     }
 
-    
+
     `;
     this.innerHTML = `
     <div>
     <h2 class="sign-up-title">Ya estas registrado? Sino<a class="registrarme-a"  href="">Registrarme</a></h2>
     </div>
         <div class="container-form-sign-up">
-        
+
          <div class="container-img">
-           <img class="img-close" src="" alt="" />
+           <img class="img-close" src="${imgClose}" alt="" />
         </div>
          <form class="submit">
          <label class="label-signup" for="email">Email</label>
@@ -113,17 +112,17 @@ class SignUpEl extends HTMLElement {
          <div>
            <input class="input" type="text" name="nombre">
          </div>
-        
+
          <div class="container-button">
            <button class="button">Registrarme</button>
           </div>
          </form>
         </div>
-        
-        
+
+
         `;
     this.appendChild(style);
   }
 }
 customElements.define("sign-up", SignUpEl);
-// ${imgClose}
+ 
