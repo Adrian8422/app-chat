@@ -1,4 +1,3 @@
-const API_BASE_URL = "http://localhost:3000";
 import { rtdb } from "./rtdb";
 import map from "lodash/map";
 const state = {
@@ -24,7 +23,7 @@ const state = {
     const cs = this.getState();
     const fullName = cs.fullName;
     const email = cs.email;
-    fetch(API_BASE_URL + "/signup", {
+    fetch("/signup", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -64,7 +63,7 @@ const state = {
   pushMessage(messages: string) {
     const cs = this.getState();
     const nombreState = this.data.fullName;
-    fetch(API_BASE_URL + `/messages/${cs.rtdbRoomId}`, {
+    fetch(`/messages/${cs.rtdbRoomId}`, {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -87,7 +86,7 @@ const state = {
   signIn(callback?) {
     const currentState = this.getState();
     if (currentState.email) {
-      fetch(API_BASE_URL + "/signin", {
+      fetch( "/signin", {
         method: "post",
         headers: {
           "content-type": "application/json",
@@ -116,7 +115,7 @@ const state = {
     const roomId = incompleteRoomId.toString();
 
     if (cs.roomId && cs.userId) {
-      fetch(API_BASE_URL + "/rooms/" + roomId + "?userId=" + userId)
+      fetch("/rooms/" + roomId + "?userId=" + userId)
         .then((res) => {
           return res.json();
         })
@@ -137,7 +136,7 @@ const state = {
   askNewRoom(callback?) {
     const cs = this.getState();
     if (cs.userId) {
-      fetch(API_BASE_URL + "/rooms", {
+      fetch( "/rooms", {
         method: "post",
         headers: {
           "content-type": "application/json",
